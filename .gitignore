@@ -1,0 +1,14 @@
+# arquivos sensíveis
+.env
+.env.local
+
+# python
+__pycache__/
+*.pyc
+
+# sistema
+.DS_Store
+Thumbs.db
+
+# node (se tiver)
+node_modules/
