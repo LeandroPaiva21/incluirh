@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inclui RH</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #ffffff;
+}
+
+/* HEADER */
+header {
+    background-color: #e6c2bb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 70px;
+}
+
+.logo img { height: 95px; }
+
+nav {
+    display: flex;
+    gap: 30px;
+}
+
+nav a {
+    color: #8c7b6b;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.btn-candidato {
+    background: #f4b75e;
+    padding: 6px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #2f2f2f;
+}
+
+/* CARROSSEL */
+.carousel {
+    position: relative;
+    padding: 30px 70px;
+}
+
+.slide { display: none; }
+.slide.active { display: block; }
+
+.slide img {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    display: block;
+    border-radius: 10px;
+}
+
+/* SETAS */
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #efc4bb;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.prev { left: 20px; }
+.next { right: 20px; }
+
+/* DOTS */
+.dots {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.dot {
+    height: 12px;
+    width: 12px;
+    background: #d9afa7;
+    display: inline-block;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.dot.active { background: #0aa6a6; }
+
+/* PASSOS */
+.passos {
+    padding: 40px 70px;
+}
+
+.passos h2 {
+    font-size: 30px;
+    margin-bottom: 30px;
+    color: #1f2d3d;
+}
+
+.passos span {
+    color: #0aa6a6;
+}
+
+.cards {
+    display: flex;
+    gap: 25px;
+}
+
+.card {
+    flex: 1;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.card img {
+    width: 100%;
+    max-width: 250px;
+}
+
+.card h3 {
+    color: #0aa6a6;
+}
+
+.card p {
+    color: #333;
+}
+
+/* RESPONSIVO */
+@media (max-width: 900px) {
+    nav { display: none; }
+    .cards { flex-direction: column; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <img src="{{ url_for('static', filename='logo.png') }}">
+    </div>
+
+    <nav>
+        <a href="#">Botão 1</a>
+        <a href="#">Botão 2</a>
+        <a href="#">Botão 3</a>
+        <a href="#">Sobre nós</a>
+        <a href="#">Contato</a>
+    </nav>
+
+    <a href="#" class="btn-candidato">Área do Candidato</a>
+</header>
+
+<!-- CARROSSEL -->
+<section class="carousel">
+
+    <div class="slide active">
+        <a href="/lei-de-cotas">
+            <img src="{{ url_for('static', filename='banner1.png') }}">
+        </a>
+    </div>
+
+    <div class="slide">
+        <a href="/vagas">
+            <img src="{{ url_for('static', filename='banner2.png') }}">
+        </a>
+    </div>
+
+    <div class="slide">
+        <a href="/empresas">
+            <img src="{{ url_for('static', filename='banner3.png') }}">
+        </a>
+    </div>
+
+    <button class="arrow prev" onclick="move(-1)">&#10094;</button>
+    <button class="arrow next" onclick="move(1)">&#10095;</button>
+</section>
+
+<div class="dots">
+    <span class="dot active" onclick="go(0)"></span>
+    <span class="dot" onclick="go(1)"></span>
+    <span class="dot" onclick="go(2)"></span>
+</div>
+
+<!-- PASSOS -->
+<section class="passos">
+    <h2>Como conquistar o seu <span>próximo emprego</span></h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <img src="{{ url_for('static', filename='passo1.png') }}">
+            <h3>Crie sua conta</h3>
+            <p>Cadastre-se gratuitamente em menos de 3 minutos.</p>
+        </div>
+
+        <div class="card">
+            <img src="{{ url_for('static', filename='passo2.png') }}">
+            <h3>Preencha seu perfil</h3>
+            <p>Quanto mais completo, maiores suas chances.</p>
+        </div>
+
+        <div class="card">
+            <img src="{{ url_for('static', filename='passo3.png') }}">
+            <h3>Dê um "Gostei"</h3>
+            <p>Mostre interesse e conecte-se com recrutadores.</p>
+        </div>
+
+    </div>
+</section>
+
+<script>
+let i = 0;
+const slides = document.querySelectorAll(".slide");
+const dots = document.querySelectorAll(".dot");
+
+function show(n){
+    if(n >= slides.length) i = 0;
+    if(n < 0) i = slides.length - 1;
+
+    slides.forEach(s => s.classList.remove("active"));
+    dots.forEach(d => d.classList.remove("active"));
+
+    slides[i].classList.add("active");
+    dots[i].classList.add("active");
+}
+
+function move(n){
+    i += n;
+    show(i);
+}
+
+function go(n){
+    i = n;
+    show(i);
+}
+
+setInterval(() => {
+    i++;
+    show(i);
+}, 5000);
+</script>
+
+</body>
+</html>
